@@ -1,0 +1,18 @@
+---
+title: "Ashley Gomez"
+---
+
+Hi! My name is Ashley Gomez. I am a master's student at Baruch College studying AI and Business Analytics.
+
+I have a background in psychology and healthcare, and I am interested in using data and analytics to better understand business and healthcare decisions.
+
+This website contains my projects for STA 9750.
+
+```{r}
+#| include: false
+1+1
+```
+
+--------------
+
+Last Updated: `r format(Sys.time(), "%A %m %d, %Y at %H:%M%p")`
