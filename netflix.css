@@ -1,0 +1,30 @@
+body { background-color: #181818; color: #F0F0F0; }
+h1 { color: #E50914; font-weight: 700; }
+h2 { color: #FFFFFF; border-bottom: 2px solid #E50914; padding-bottom: 10px; }
+h3, h4 { color: #F5F5F5; }
+a { color: #FF777C; }
+p { line-height: 1.7; }
+
+.gt_table { background-color: #292929 !important; color: #FFFFFF !important; }
+.gt_heading, .gt_col_headings { background-color: #383838 !important; color: #FFFFFF !important; }
+.gt_title, .gt_subtitle, .gt_col_heading { color: #FFFFFF !important; }
+.gt_row { background-color: #292929 !important; color: #FFFFFF !important; }
+.gt_row:nth-child(even) { background-color: #343434 !important; }
+.gt_table td, .gt_table th { border-color: #555555 !important; }
+.gt_table .gt_stub { background-color: #343434 !important; color: #FFFFFF !important; }
+.gt_table .gt_group_heading { background-color: #383838 !important; color: #FFFFFF !important; }
+
+@media print {
+ body { background-color: white !important; color: #202020 !important; }
+ h1, h2, h3, h4 { color: #B20710 !important; }
+}
+
+/* Fix white table headers */
+ .gt_table .gt_col_headings,
+ .gt_table .gt_col_heading,
+ .gt_table .gt_column_spanner,
+ .gt_table .gt_stubhead,
+ .gt_table .gt_row_group_first td {
+   background-color: #383838 !important;
+   color: #FFFFFF !important;
+ }
