@@ -1051,9 +1051,7 @@ There were a few issues we encountered with the project in terms of getting the 
 Going back to our original question, are the public transportation systems we rely on actually environmentally friendly? Based on the data we looked at, we found that some transit agencies had lower estimated CO₂ emissions per passenger trip and passenger mile than others. However, we can't necessarily say that all public transportation is environmentally friendly, since we didn't compare these results with emissions from individual car travel. What we did learn is that looking at total emissions alone isn't enough. We also need to consider how many passengers use these services and how far they travel when comparing the environmental performance of transit agencies.
 
 ::: {.callout-note title="AI Usage Statement" collapse="true"}
-
 I used Claude to help troubleshoot errors, especially when working with the Excel data sets. I also used it to help check calculations, brainstorm ideas, and organize the overall project, like help with the website design, including adding images, choosing colors, and organizing how the information would be presented.
-
 :::
 
 ------------------------------------------------------------------------
