@@ -1,5 +1,1065 @@
 ---
-title: "Mini-Project Placeholder"
+title: "Mini-Project 02: The Green Transit Report"
+subtitle: "Evaluating Environmental Performance Across US Transit Systems"
+author: "Ashley Gomez"
+
+format:
+  html:
+    theme: flatly
+    css: silver-line.css
+    page-layout: full
+    toc: true
+    toc-location: left
+    toc-depth: 2
+    code-fold: true
+    code-summary: "Show R Code"
+    fig-width: 11
+    fig-height: 5.5
+    mainfont: "Arial"
+    fontsize: 1.05em
+
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
-This is a placeholder for STA9750 Mini-Project 2. Check back soon for more!
+![New York City subway train with the skyline in the background](images/images.jpg){width="100%"}
+
+## Introduction
+### Why Should We Care About Green Transit? {.unnumbered .unlisted}
+In July 2025, New York City subways averaged approximately 3.86 million rides on weekdays, showing how heavily we rely on public transportation, whether it’s buses, trains, or other transit systems, to get to work, school, or any other destination. However, public transportation comes with its own challenges, such as how crowded and busy it can get, especially during rush hour, and how there always seem to be delays when we least expect them. You may have heard in the past that taking public transportation is better for the environment than everyone driving their own individual car. But have you ever wondered if the public transportation systems we rely on are actually environmentally friendly?
+
+To better understand how environmentally friendly public transportation systems are, we looked at three different datasets covering transit agencies across the United States. These datasets allow us to examine electricity production, fuel consumption, and passenger transportation. A key distinction is that producing less CO₂ doesn’t necessarily tell us the whole story. There are other factors to consider, such as how many passenger trips an agency provides and how far those passengers travel. By considering both total emissions and efficiency, we can better understand the environmental performance of transit agencies and determine which ones deserve recognition.
+
+## Data Acquisition and Preparation
+
+### Understanding the Transit Data {.unnumbered .unlisted}
+
+The three datasets we explored were the EIA State Electricity Profiles, NTD Energy Consumption, and NTD Transit Service. Each dataset had a different purpose. The EIA State Electricity Profiles helped us understand how much CO₂ is produced from electricity generation in different states. The NTD Energy Consumption dataset showed us how much fuel and electricity transit agencies use, while the NTD Transit Service dataset provided information on how many passenger trips each agency had and how far passengers traveled.
+
+Before we could start our analysis, we first had to clean and prepare the datasets. This involved importing them into RStudio, reviewing the data, and ensuring the agency IDs and transit mode codes matched correctly. We also had to deal with some missing information, since not every agency had all the data we needed. Once everything was cleaned and prepared, we could move on to exploring the data and eventually combining the datasets to calculate emissions and compare transit agencies.
+
+<!-- State Electricity Profiles: Downloading and preparing EIA electricity data -->
+```{r}
+library(tidyverse)
+library(stringr)
+library(httr2)
+library(rvest)
+
+get_eia_sep <- function(state, abbr){
+    library(tidyverse)
+    library(stringr)
+    library(httr2)
+    library(rvest)
+    library(fs)
+
+    state_formatted <- str_to_lower(state) |>
+      str_replace_all("\\s", "")
+
+    dir_name <- fs::path("data", "mp02")
+    file_name <- fs::path(dir_name, state_formatted)
+
+    fs::dir_create(dir_name, recurse=TRUE)
+
+    if(!fs::file_exists(file_name)){
+        BASE_URL <- "https://www.eia.gov"
+        RESPONSE <- request(BASE_URL) |>
+          req_url_path("electricity",
+                       "state",
+                       state_formatted) |>
+          req_headers(
+            `User-Agent` = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:149.0) Gecko/20100101 Firefox/149.0"
+            ) |>
+          req_retry(max_tries = 4) |>
+          req_perform(file_name)
+
+        resp_check_status(RESPONSE)
+    }
+
+    TABLE <- read_html(file_name) |>
+        html_element("table") |>
+        html_table() |>
+        mutate(Item = str_to_lower(Item))
+
+    if("U.S. rank" %in% colnames(TABLE)){
+        TABLE <- TABLE |>
+          rename(Rank = `U.S. rank`)
+    }
+
+    CO2_MWh <- TABLE |>
+        filter(Item == "carbon dioxide (lbs/mwh)") |>
+        pull(Value) |>
+        str_replace_all(",", "") |>
+        as.numeric()
+
+    PRIMARY <- TABLE |>
+        filter(Item == "primary energy source") |>
+        pull(Rank)
+
+    RATE <- TABLE |>
+        filter(Item == "average retail price (cents/kwh)") |>
+        pull(Value) |>
+        as.numeric()
+
+    GENERATION_MWh <- TABLE |>
+        filter(Item == "net generation (megawatthours)") |>
+        pull(Value) |>
+        str_replace_all(",", "") |>
+        as.numeric()
+
+    data.frame(
+      CO2_MWh = CO2_MWh,
+      primary_source = PRIMARY,
+      electricity_price_MWh = RATE * 10,
+      generation_MWh = GENERATION_MWh,
+      state = state,
+      abbreviation = abbr
+    )
+}
+
+EIA_SEP_REPORT <- map2(state.name, state.abb, get_eia_sep) |>
+  list_rbind()
+```
+
+<!-- Energy Consumption: NTD energy data -->
+```{r}
+load_ntd_energy <- function(){
+  library(readxl)
+  library(httr2)
+  library(tidyverse)
+  library(fs)
+
+  # Create 'data/mp02' directory if not already present
+  DATA_DIR <- fs::path("data", "mp02")
+  fs::dir_create(DATA_DIR, recurse=TRUE)
+
+
+NTD_ENERGY_FILE <- "/Users/ashleygomez/STA9750-2026-FALL/data/mp02/2025_ntd_energy.xlsx"
+
+message(
+  "Render folder: ", getwd(),
+  " | Excel exists: ", file.exists(NTD_ENERGY_FILE),
+  " | Excel size: ", file.info(NTD_ENERGY_FILE)$size
+)
+
+if(!fs::file_exists(NTD_ENERGY_FILE)){
+
+    request("https://www.transit.dot.gov/") |>
+      req_url_path("sites",
+                   "fta.dot.gov",
+                   "files",
+                   "2026-09",
+                   "2025 Energy Consumption_260806.xlsx") |>
+      req_headers(
+        `User-Agent` = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:149.0) Gecko/20100101 Firefox/149.0") |>
+      req_perform(NTD_ENERGY_FILE)
+  }
+
+  if(file.info(NTD_ENERGY_FILE)$size < 1e4){
+    cat("I was unable to download the NTD Energy File. Please try again.\n")
+    stop("Download failed. Please delete the corrupted file and try again.")
+  }
+
+  to_numeric_fill_0 <- function(x){
+    x <- if_else(x == "-", NA, x)
+    replace_na(as.numeric(x), 0)
+  }
+
+  read_excel(NTD_ENERGY_FILE) |>
+    select(-c(`Reporter Type`,
+              `Reporting Module`,
+              `Gallons of Other Fuel`,
+              `Other Fuel Description`)) |>
+    mutate(across(-c(`Agency Name`,
+                     `Mode`,
+                     `TOS`),
+                  to_numeric_fill_0)) |>
+    group_by(`NTD ID`, `Mode`, `Agency Name`) |>
+    summarize(across(where(is.numeric), sum),
+              .groups = "keep") |>
+    mutate(ENERGY = sum(c_across(c(where(is.numeric))))) |>
+    filter(ENERGY > 0) |>
+    select(-ENERGY) |>
+    ungroup()
+}
+
+NTD_ENERGY <- load_ntd_energy()
+```
+
+<!-- Transit Service Provided: NTD service data -->
+```{r}
+load_ntd_service <- function(){
+  library(httr2)
+  library(tidyverse)
+  library(fs)
+
+  # Create 'data/mp02' directory if not already present
+  DATA_DIR <- fs::path("data", "mp02")
+  fs::dir_create(DATA_DIR, recurse=TRUE)
+
+  NTD_SERVICE_FILE <- fs::path(DATA_DIR, "2025_ntd_service.csv")
+
+  if(!fs::file_exists(NTD_SERVICE_FILE)){
+    library(httr2)
+
+    request("https://data.transportation.gov/resource/4fir-qbim.csv") |>
+      req_url_query(`$query`=paste(
+        "SELECT `_5_digit_ntd_id` AS `NTD_ID`",
+        "`max_agency` AS `AGENCY`",
+        "`max_reporter_type` AS `reporter_type`",
+        "`max_organization_type` AS `organization_type`",
+        "`max_city` AS `city`",
+        "`max_state` AS `state`",
+        "`mode`",
+        "`type_of_service`",
+        "`max_primary_uza_code` as `uza_code`",
+        "`max_primary_uza_name` as `uza_name`",
+        "`max_primary_uza_area_sq_miles` as `uza_sq_miles`",
+        "`max_primary_uza_population` as `uza_population`",
+        "`max_service_area_sq_miles` as `service_area_sq_miles`",
+        "`max_service_area_population` as `service_area_population`",
+        "`questionable_record` as `flagged_likely_inaccurate`",
+        "`sum_unlinked_passenger_trips_upt` as `total_upt`",
+        "`sum_passenger_miles` WHERE caseless_one_of(`report_year`, '2025') limit 50000",
+        sep=",")) |>
+      req_headers(
+        `User-Agent` = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:149.0) Gecko/20100101 Firefox/149.0") |>
+      req_perform(NTD_SERVICE_FILE)
+  }
+
+  if(file.info(NTD_SERVICE_FILE)$size < 1e4){
+    cat("I was unable to download the NTD Service File. Please try again.\n")
+    stop("Download failed. Please delete the corrupt file and try again.")
+  }
+
+  read_csv(NTD_SERVICE_FILE) |>
+    mutate(flagged_likely_inaccurate =
+             !is.na(flagged_likely_inaccurate))
+}
+
+NTD_SERVICE <- load_ntd_service()
+```
+
+<!-- Initial Data Inspection: Checking imported datasets -->
+```{r}
+#| include: false
+
+glimpse(EIA_SEP_REPORT)
+glimpse(NTD_ENERGY)
+glimpse(NTD_SERVICE)
+```
+
+<!-- Data Cleaning: Recoding transit modes -->
+```{r}
+#| include: false
+distinct(NTD_ENERGY, Mode)
+distinct(NTD_SERVICE, mode)
+```
+
+```{r}
+NTD_ENERGY <- NTD_ENERGY |>
+  mutate(Mode = recode_values(Mode,
+    "DR" ~ "Demand Response",
+    "FB" ~ "Ferryboat",
+    "MB" ~ "Bus",
+    "SR" ~ "Streetcar Rail",
+    "TB" ~ "Trolleybus",
+    "VP" ~ "Vanpool",
+    "CB" ~ "Commuter Bus",
+    "RB" ~ "Bus Rapid Transit",
+    "LR" ~ "Light Rail",
+    "MG" ~ "Monorail/Automated Guideway",
+    "CR" ~ "Commuter Rail",
+    "AR" ~ "Alaska Railroad",
+    "TR" ~ "Aerial Tramway",
+    "HR" ~ "Heavy Rail",
+    "YR" ~ "Hybrid Rail",
+    "IP" ~ "Inclined Plane",
+    "CC" ~ "Cable Car",
+    default = "Unknown"))
+```
+## Exploratory Analysis
+
+
+### What Can the Transit Data Tell Us? {.unnumbered .unlisted}
+
+Before moving on to our main analysis, we first wanted to get a better understanding of the three datasets. To do this, we explored eight questions that examined how much CO₂ is produced by electricity in different states, how much fuel transit agencies use, and how many passengers rely on these services. This helped us better understand the information we were working with before comparing the environmental performance of transit agencies.
+
+### Part 1: State Electricity Profiles
+
+#### Question A2: Which five states have the dirtiest electricity mix?
+
+```{r}
+EIA_SEP_REPORT |>
+  arrange(desc(CO2_MWh)) |>
+  select(state, CO2_MWh, primary_source) |>
+  slice_head(n = 5)
+```
+#### Question A3: Average CO2 Emissions in the United States
+
+```{r}
+US_CO2_AVG <- EIA_SEP_REPORT |>
+  summarize(
+    average_CO2 = sum(CO2_MWh * generation_MWh) /
+      sum(generation_MWh)
+  )
+```
+
+Across the United States, the weighted average amount of CO2 produced for every megawatt-hour of electricity generated is approximately `r round(US_CO2_AVG$average_CO2, 1)` pounds of CO2.
+
+
+#### Question A5: Comparing New York and Texas Electricity
+
+```{r}
+NY_TX_CO2 <- EIA_SEP_REPORT |>
+  filter(state == "New York" | state == "Texas") |>
+  select(state, CO2_MWh)
+
+NY_TX_RATIO <- NY_TX_CO2 |>
+  summarize(
+    ratio = CO2_MWh[state == "Texas"] /
+      CO2_MWh[state == "New York"]
+  )
+```
+
+When comparing New York to Texas, we found that New York produces less CO2 per megawatt-hour of electricity than Texas. Texas produces approximately `r round(NY_TX_RATIO$ratio, 2)` times as much CO2 per megawatt-hour as New York.
+
+
+### Part 2: Transit Energy Consumption
+
+
+#### Question B1: Five Transit Agencies with the Highest Fuel Consumption
+
+```{r}
+library(gt)
+
+TOP_FUEL_AGENCIES <- NTD_ENERGY |>
+  group_by(`NTD ID`, `Agency Name`) |>
+  summarize(
+    across(starts_with("Gallons of"), sum),
+    .groups = "drop"
+  ) |>
+  mutate(
+    total_gallons = `Gallons of Bio-Diesel` +
+      `Gallons of Bunker Fuel` +
+      `Gallons of Compressed Natural Gas` +
+      `Gallons of Diesel Fuel` +
+      `Gallons of Ethanol` +
+      `Gallons of Gasoline` +
+      `Gallons of Kerosene` +
+      `Gallons of Liquified Nat Gas` +
+      `Gallons of Liquified Petroleum Gas`
+  ) |>
+  arrange(desc(total_gallons)) |>
+  slice_head(n = 5)
+
+TOP_FUEL_AGENCIES |>
+  select(`Agency Name`, total_gallons) |>
+  gt() |>
+  cols_label(
+    `Agency Name` = "Transit Agency",
+    total_gallons = "Total Gallons"
+  ) |>
+  fmt_number(total_gallons, decimals = 0) |>
+  tab_header(
+    title = "Five Transit Agencies with the Highest Fuel Consumption"
+  )
+```
+
+#### Fuel Consumption Breakdown by Type
+
+```{r}
+TOP_FUEL_AGENCIES |>
+  select(-`NTD ID`, -total_gallons) |>
+  pivot_longer(
+    cols = starts_with("Gallons of"),
+    names_to = "Fuel_Type",
+    values_to = "Gallons"
+  ) |>
+  filter(Gallons > 0) |>
+  mutate(
+    Fuel_Type = str_remove(Fuel_Type, "Gallons of ")
+  ) |>
+  gt() |>
+  cols_label(
+    `Agency Name` = "Transit Agency",
+    Fuel_Type = "Fuel Type",
+    Gallons = "Gallons Used"
+  ) |>
+  fmt_number(Gallons, decimals = 0) |>
+  tab_header(
+    title = "Fuel Consumption Breakdown by Agency"
+  )
+```
+
+
+#### Question B2: Fuel Consumption Across US Public Transit
+
+```{r}
+FUEL_TOTALS <- NTD_ENERGY |>
+  summarize(across(starts_with("Gallons of"), sum)) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Fuel_Type",
+    values_to = "Total_Gallons"
+  ) |>
+  mutate(
+    Fuel_Type = str_remove(Fuel_Type, "Gallons of ")
+  )
+
+ggplot(FUEL_TOTALS,
+       aes(x = reorder(Fuel_Type, Total_Gallons),
+           y = Total_Gallons / 1000000)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Fuel Consumption Across US Public Transit",
+    x = "Fuel Type",
+    y = "Total Gallons (Millions)"
+  )
+```
+
+
+### Part 3: Transit Service
+
+#### Question C1: Five Transit Services with the Most Passenger Trips
+
+```{r}
+TOP_SERVICES <- NTD_SERVICE |>
+  arrange(desc(total_upt)) |>
+  slice_head(n = 5) |>
+  mutate(
+    Service = case_when(
+      AGENCY == "MTA New York City Transit" & mode == "HR" ~ "NYC Subway",
+      AGENCY == "MTA New York City Transit" & mode == "MB" ~ "NYC Buses",
+      str_detect(AGENCY, "Los Angeles") ~ "LA Metro Buses",
+      str_detect(AGENCY, "Chicago Transit Authority") ~ "Chicago CTA Buses",
+      str_detect(AGENCY, "Washington Metropolitan") ~ "Washington Metro Rail",
+      TRUE ~ AGENCY
+    )
+  )
+
+ggplot(TOP_SERVICES,
+       aes(x = reorder(Service, total_upt),
+           y = total_upt / 1000000)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Five Busiest US Transit Services",
+    x = "Transit Service",
+    y = "Annual Passenger Trips (Millions)"
+  ) +
+  theme_minimal()
+```
+
+
+#### Question C2: Average MTA New York City Transit Trip Length
+
+```{r}
+MTA_TRIPS <- NTD_SERVICE |>
+  filter(AGENCY == "MTA New York City Transit") |>
+  summarize(
+    passenger_miles = sum(sum_passenger_miles, na.rm = TRUE),
+    passenger_trips = sum(total_upt, na.rm = TRUE)
+  ) |>
+  mutate(
+    average_trip_length = passenger_miles / passenger_trips
+  )
+```
+
+When looking at MTA New York City Transit, we found that the average passenger trip is approximately `r round(MTA_TRIPS$average_trip_length, 2)` miles.
+
+#### Question C3: NYC Transit Service with the Longest Average Trip
+
+```{r}
+NYC_SERVICES <- NTD_SERVICE |>
+  filter(city %in% c("New York", "New York City",
+                     "Brooklyn", "Queens",
+                     "Bronx", "Staten Island")) |>
+  filter(!is.na(sum_passenger_miles),
+         total_upt > 0) |>
+  mutate(
+    average_trip_length = sum_passenger_miles / total_upt
+  ) |>
+  arrange(desc(average_trip_length))
+```
+
+Out of the NYC transit services we compared, Metro-North Railroad had the longest average passenger trip at approximately `r round(NYC_SERVICES$average_trip_length[1], 1)` miles.
+
+## Final Insights and Deliverable
+
+### Measuring Environmental Performance {.unnumbered .unlisted}
+
+To better understand how environmentally friendly transit agencies are, we looked at both their total CO₂ emissions and the number of passengers they serve. We estimated emissions by looking at the fuel and electricity each agency used. However, total emissions alone don’t tell the whole story, since some agencies serve more passengers or offer longer trips than others. That’s why we also looked at emissions per passenger trip and passenger mile, which helped us make a better comparison between transit agencies.
+
+## Data Analysis
+
+### Task 5: Calculating Total Emissions
+
+In order to combine the three data sets, we first needed to match the transit agencies using their agency IDs and transportation modes. Once we had that information together, we used the state electricity data to estimate how much CO₂ was produced from electricity use, along with the fuel consumption data to estimate emissions from fuel. We then added both estimates together to calculate the total CO₂ emissions for each transit service. One issue we came across was that some records had missing information or didn't match between data sets, meaning we couldn't calculate emissions for every service.
+
+::: {.callout-note collapse="true"}
+## View the Detailed Emissions Calculation Process
+#### Preparing the Data for Integration
+
+```{r}
+#| include: false
+# Check agency IDs and transit modes in both NTD datasets
+
+NTD_ENERGY |>
+  select(`NTD ID`, Mode, `Agency Name`) |>
+  slice_head(n = 5)
+
+NTD_SERVICE |>
+  select(NTD_ID, mode, AGENCY, state) |>
+  slice_head(n = 5)
+
+# Check the data types of the identifying columns
+
+glimpse(NTD_ENERGY)
+
+glimpse(NTD_SERVICE)
+```
+
+```{r}
+#| include: false
+ENERGY_MODES <- NTD_ENERGY |>
+  distinct(Mode) |>
+  rename(mode = Mode)
+
+SERVICE_MODES <- NTD_SERVICE |>
+  distinct(mode)
+
+anti_join(ENERGY_MODES, SERVICE_MODES, by = "mode")
+```
+
+#### Matching Transit Modes and Agency IDs
+
+```{r}
+#| include: false
+NTD_ENERGY_READY <- NTD_ENERGY |>
+  mutate(
+    mode = case_when(
+      Mode == "Demand Response" ~ "DR",
+      Mode == "Ferryboat" ~ "FB",
+      Mode == "Bus" ~ "MB",
+      Mode == "Streetcar Rail" ~ "SR",
+      Mode == "Trolleybus" ~ "TB",
+      Mode == "Vanpool" ~ "VP",
+      Mode == "Commuter Bus" ~ "CB",
+      Mode == "Bus Rapid Transit" ~ "RB",
+      Mode == "Light Rail" ~ "LR",
+      Mode == "Monorail/Automated Guideway" ~ "MG",
+      Mode == "Commuter Rail" ~ "CR",
+      Mode == "Alaska Railroad" ~ "AR",
+      Mode == "Aerial Tramway" ~ "TR",
+      Mode == "Heavy Rail" ~ "HR",
+      Mode == "Hybrid Rail" ~ "YR",
+      Mode == "Inclined Plane" ~ "IP",
+      Mode == "Cable Car" ~ "CC",
+      TRUE ~ NA_character_
+    ),
+    NTD_ID = as.numeric(`NTD ID`)
+  )
+
+NTD_SERVICE_READY <- NTD_SERVICE |>
+  mutate(NTD_ID = as.numeric(NTD_ID))
+
+ENERGY_MODES_READY <- NTD_ENERGY_READY |>
+  distinct(mode)
+
+SERVICE_MODES <- NTD_SERVICE_READY |>
+  distinct(mode)
+
+anti_join(ENERGY_MODES_READY, SERVICE_MODES, by = "mode")
+```
+
+#### Checking Agency and Mode Matches
+
+```{r}
+#| include: false
+ENERGY_PAIRS <- NTD_ENERGY_READY |>
+  distinct(NTD_ID, mode)
+
+SERVICE_PAIRS <- NTD_SERVICE_READY |>
+  distinct(NTD_ID, mode)
+
+# Find energy records without a matching service
+UNMATCHED_ENERGY <- anti_join(
+  ENERGY_PAIRS,
+  SERVICE_PAIRS,
+  by = c("NTD_ID", "mode")
+)
+
+# Find service records without matching energy data
+UNMATCHED_SERVICE <- anti_join(
+  SERVICE_PAIRS,
+  ENERGY_PAIRS,
+  by = c("NTD_ID", "mode")
+)
+
+nrow(ENERGY_PAIRS)
+nrow(SERVICE_PAIRS)
+nrow(UNMATCHED_ENERGY)
+nrow(UNMATCHED_SERVICE)
+```
+
+
+#### Checking for Multiple Service Records
+
+```{r}
+#| include: false
+NTD_SERVICE_READY |>
+  count(NTD_ID, mode) |>
+  arrange(desc(n)) |>
+  slice_head(n = 10)
+```
+#### Combining Transit Service Records
+
+```{r}
+#| include: false
+NTD_SERVICE_SUMMARY <- NTD_SERVICE_READY |>
+  group_by(NTD_ID, mode) |>
+  summarize(
+    AGENCY = first(AGENCY),
+    state = first(state),
+    total_upt = sum(total_upt, na.rm = TRUE),
+    sum_passenger_miles = sum(sum_passenger_miles, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Check how many agency and mode pairs remain
+nrow(NTD_SERVICE_SUMMARY)
+
+# Check that each agency and mode appears only once
+NTD_SERVICE_SUMMARY |>
+  count(NTD_ID, mode) |>
+  filter(n > 1)
+```
+
+#### Joining the Three Datasets
+
+```{r}
+#| include: false
+TRANSIT_COMBINED <- NTD_ENERGY_READY |>
+  left_join(
+    NTD_SERVICE_SUMMARY,
+    by = c("NTD_ID", "mode")
+  ) |>
+  left_join(
+    EIA_SEP_REPORT |>
+      select(abbreviation, CO2_MWh),
+    by = c("state" = "abbreviation")
+  )
+
+TRANSIT_COMBINED |>
+  select(
+    `Agency Name`,
+    mode,
+    state,
+    total_upt,
+    CO2_MWh
+  ) |>
+  slice_head(n = 10)
+
+```
+
+#### Calculating Electricity-Related CO2 Emissions
+
+```{r}
+#| include: false
+TRANSIT_EMISSIONS <- TRANSIT_COMBINED |>
+  mutate(
+    electricity_kWh =
+      `Kilowatt hours of Electric Propulsion` +
+      `Kilowatt hours of Electric Battery`,
+
+    electricity_MWh = electricity_kWh / 1000,
+
+    electricity_CO2_lbs = electricity_MWh * CO2_MWh
+  )
+
+# Check the electricity emissions calculations
+TRANSIT_EMISSIONS |>
+  select(
+    `Agency Name`,
+    mode,
+    state,
+    electricity_kWh,
+    electricity_MWh,
+    electricity_CO2_lbs
+  ) |>
+  slice_head(n = 10)
+
+# Check how many records are missing emissions estimates
+TRANSIT_EMISSIONS |>
+  filter(is.na(CO2_MWh)) |>
+  count(state)
+```
+
+#### Calculating Fuel-Related CO2 Emissions
+
+```{r}
+#| include: false
+TRANSIT_EMISSIONS <- TRANSIT_EMISSIONS |>
+  mutate(
+    diesel_CO2_lbs =
+      `Gallons of Diesel Fuel` * 22.45,
+
+    gasoline_CO2_lbs =
+      `Gallons of Gasoline` * 18.73,
+
+    kerosene_CO2_lbs =
+      `Gallons of Kerosene` * 21.78,
+
+    petroleum_gas_CO2_lbs =
+      `Gallons of Liquified Petroleum Gas` * 12.68,
+
+    bunker_fuel_CO2_lbs =
+      `Gallons of Bunker Fuel` * 24.78,
+
+    fuel_CO2_lbs =
+      diesel_CO2_lbs +
+      gasoline_CO2_lbs +
+      kerosene_CO2_lbs +
+      petroleum_gas_CO2_lbs +
+      bunker_fuel_CO2_lbs
+  )
+
+TRANSIT_EMISSIONS |>
+  select(
+    `Agency Name`,
+    mode,
+    diesel_CO2_lbs,
+    gasoline_CO2_lbs,
+    fuel_CO2_lbs,
+    electricity_CO2_lbs
+  ) |>
+  slice_head(n = 10)
+```
+
+#### Completing Total CO2 Emissions
+
+```{r}
+#| include: false
+TRANSIT_EMISSIONS <- TRANSIT_EMISSIONS |>
+  mutate(
+    # Compressed natural gas
+    cng_CO2_lbs =
+      `Gallons of Compressed Natural Gas` *
+      123.57 * 120.85 / 1000,
+
+    # Liquefied natural gas
+    lng_CO2_lbs =
+      `Gallons of Liquified Nat Gas` *
+      0.66 * 123.57 * 120.85 / 1000,
+
+    # Biodiesel
+    biodiesel_CO2_lbs =
+      `Gallons of Bio-Diesel` * 22.45,
+   
+     # Ethanol
+ethanol_CO2_lbs =
+  `Gallons of Ethanol` * 5.75 * 2.20462,
+  
+  # Add the remaining fuel emissions
+   fuel_CO2_lbs =
+  fuel_CO2_lbs +
+  cng_CO2_lbs +
+  lng_CO2_lbs +
+  biodiesel_CO2_lbs +
+  ethanol_CO2_lbs,
+
+    # Zero electricity consumption means zero electricity emissions
+    electricity_CO2_lbs = if_else(
+      electricity_kWh == 0,
+      0,
+      electricity_CO2_lbs
+    ),
+
+    # Calculate total emissions
+    total_CO2_lbs =
+      fuel_CO2_lbs + electricity_CO2_lbs
+  )
+
+TRANSIT_EMISSIONS |>
+  select(
+    `Agency Name`,
+    mode,
+    state,
+    fuel_CO2_lbs,
+    electricity_CO2_lbs,
+    total_CO2_lbs
+  ) |>
+  slice_head(n = 10)
+
+TRANSIT_EMISSIONS |>
+  summarize(
+    total_records = n(),
+    missing_totals = sum(is.na(total_CO2_lbs))
+  )
+```
+:::
+
+### Task 6: Emissions per Passenger
+
+Looking at total CO2 emissions alone doesn't tell the whole story, particularly when you've got some agencies that serve a lot more passengers or cover a lot more distance than others. Take NYC as an example. A person traveling from Queens to the Bronx is going to have a longer commute than someone traveling within Queens. That's why we also wanted to look at emissions per passenger trip and emissions per passenger mile. They sound the same but they're very different. A passenger trip is simply the number of times someone boards a vehicle. A passenger mile is the number of miles travelled by a passenger. One possible limitation with the trip ride is that a person transferring from one train to another could be counted as multiple boardings even though they're only making one journey. Looking at both of those metrics gives us a better sense of how passenger activity and passenger miles impact our comparison.
+
+
+
+```{r}
+#| include: false
+TRANSIT_EFFICIENCY <- TRANSIT_EMISSIONS |>
+  filter(
+    !is.na(total_CO2_lbs),
+    !is.na(total_upt),
+    !is.na(sum_passenger_miles),
+    total_upt > 0,
+    sum_passenger_miles > 0
+  ) |>
+  mutate(
+    CO2_per_trip = total_CO2_lbs / total_upt,
+    CO2_per_passenger_mile =
+      total_CO2_lbs / sum_passenger_miles
+  )
+
+TRANSIT_EFFICIENCY |>
+  select(
+    `Agency Name`,
+    mode,
+    total_upt,
+    sum_passenger_miles,
+    CO2_per_trip,
+    CO2_per_passenger_mile
+  ) |>
+  slice_head(n = 10)
+
+TRANSIT_EFFICIENCY |>
+  summarize(
+    agencies_and_modes = n(),
+    average_CO2_per_trip = mean(CO2_per_trip),
+    average_CO2_per_mile = mean(CO2_per_passenger_mile)
+  )
+```
+
+### Task 7: Identifying Environmentally Responsible Transit Agencies
+
+For our analysis, we decided to have two awards: Greenest Transit Agency and Most Efficient Passenger Boarding. At first, these awards might sound like they're measuring the same thing, but there's actually a difference. The Greenest Transit Agency award looks at CO₂ emissions per passenger mile, while the Most Efficient Passenger Boarding award looks at emissions per passenger trip. We wanted to include both because the number of times passengers board a transit service doesn't necessarily tell us how far they're traveling. To qualify for either award, agencies needed at least one million passenger trips and one million passenger miles, along with available emissions estimates. We then selected the agency with the lowest emissions for each measurement.
+
+<!-- Combining Transportation Modes by Agency -->
+
+```{r}
+#| include: false
+AGENCY_EMISSIONS <- TRANSIT_EMISSIONS |>
+  group_by(NTD_ID, `Agency Name`) |>
+  summarize(
+    state = first(state),
+    total_CO2_lbs = sum(total_CO2_lbs, na.rm = TRUE),
+    total_upt = sum(total_upt, na.rm = TRUE),
+    passenger_miles = sum(sum_passenger_miles, na.rm = TRUE),
+    missing_modes = sum(is.na(total_CO2_lbs)),
+    .groups = "drop"
+  ) |>
+  filter(
+    missing_modes == 0,
+    total_upt > 0,
+    passenger_miles > 0
+  ) |>
+  mutate(
+    CO2_per_trip = total_CO2_lbs / total_upt,
+    CO2_per_passenger_mile = total_CO2_lbs / passenger_miles
+  )
+
+AGENCY_EMISSIONS |>
+  select(
+    `Agency Name`,
+    state,
+    total_upt,
+    passenger_miles,
+    total_CO2_lbs,
+    CO2_per_passenger_mile
+  ) |>
+  slice_head(n = 10)
+
+nrow(AGENCY_EMISSIONS)
+```
+
+<!-- Selecting the Two Award Winners -->
+
+```{r}
+#| include: false
+
+AWARD_AGENCIES <- AGENCY_EMISSIONS |>
+  filter(
+    !state %in% c("DC", "PR"),
+    missing_modes == 0,
+    total_upt >= 100000,
+    total_CO2_lbs > 0,
+    CO2_per_trip > 0,
+    CO2_per_passenger_mile > 0
+  )
+
+GREENEST_AGENCIES <- AWARD_AGENCIES |>
+  arrange(CO2_per_passenger_mile) |>
+  slice_head(n = 5)
+
+TRIP_EFFICIENT_AGENCIES <- AWARD_AGENCIES |>
+  arrange(CO2_per_trip) |>
+  slice_head(n = 5)
+
+GREENEST_AGENCIES |>
+  select(`Agency Name`, state, CO2_per_passenger_mile)
+
+TRIP_EFFICIENT_AGENCIES |>
+  select(`Agency Name`, state, CO2_per_trip)
+
+AWARD_AGENCIES |>
+  summarize(
+    median_CO2_per_mile = median(CO2_per_passenger_mile),
+    median_CO2_per_trip = median(CO2_per_trip)
+  )
+```
+### Visualizing the Environmental Awards
+
+### Which Transit Agencies Are Leading the Way?
+
+After looking at the total CO₂ emissions and passenger activity, we wanted to see which transit agencies stood out. For this, we decided to use two awards: Greenest Transit Agency and Most Efficient Passenger Boarding. Although these awards might sound similar, they look at two different things. One considers how far passengers travel, while the other looks at how many times passengers board. We chose both because the number of passenger trips doesn't necessarily tell us the distance people are traveling, and we wanted to consider both when comparing transit agencies. To qualify, agencies needed at least one million passenger trips and one million passenger miles, along with available emissions estimates.
+
+#### Award 1: Greenest Transit Agency
+
+For the Greenest Transit Agency award, the agency that produced the lowest estimated CO₂ emissions per passenger mile was the City of Seattle. Seattle came in first with approximately 0.064 pounds of CO₂ per passenger mile, compared to the median of 1.07 pounds among eligible agencies. This means that, based on the distance passengers traveled, Seattle's reported service had one of the lowest estimated emissions in our analysis.
+
+```{r}
+ggplot(
+  GREENEST_AGENCIES,
+  aes(
+    x = reorder(`Agency Name`, CO2_per_passenger_mile),
+    y = CO2_per_passenger_mile
+  )
+) +
+  geom_col(fill = "#4D7897") +
+  coord_flip() +
+  labs(
+    title = "Greenest Transit Agency",
+    subtitle = "Five agencies with the lowest estimated CO2 emissions per passenger mile",
+    x = "Transit Agency",
+    y = "Pounds of CO2 per Passenger Mile",
+    caption = "Source: NTD 2025 and EIA State Electricity Profiles"
+  ) +
+  theme_minimal()
+```
+#### Award 2: Passenger Trip Efficiency Award
+Our second award, Most Efficient Passenger Boarding, focused on the amount of CO₂ produced per passenger boarding rather than the distance traveled. The city of Seattle also came in first for this award, with approximately 0.0575 pounds of CO₂ per boarding, compared to the median of 5.92 pounds among eligible agencies. Even though this award measures something different from the first, Seattle still had the lowest estimated emissions among the agencies that qualified.
+
+```{r}
+ggplot(
+  TRIP_EFFICIENT_AGENCIES,
+  aes(
+    x = reorder(`Agency Name`, CO2_per_trip),
+    y = CO2_per_trip
+  )
+) +
+  geom_col(fill = "#718A9B") +
+  coord_flip() +
+  labs(
+    title = "Passenger Trip Efficiency Award",
+    subtitle = "Five agencies with the lowest estimated CO2 emissions per passenger trip",
+    x = "Transit Agency",
+    y = "Pounds of CO2 per Passenger Trip",
+    caption = "Source: NTD 2025 and EIA State Electricity Profiles"
+  ) +
+  theme_minimal()
+```
+
+### Comparing Award Winners with Other Agencies
+
+When comparing Seattle's performance with the other transit agencies shown in the bar charts, we can see that Seattle had the lowest estimated CO₂ emissions in both award categories. For the Greenest Transit Agency award, we looked at the five agencies with the lowest emissions per passenger mile, which included agencies in Oregon, California, Anaheim, and Snohomish County. Although all five performed well compared to other eligible agencies, Seattle still ranked the lowest.
+For the second award, Most Efficient Passenger Boarding, Seattle once again came in first among the five agencies with the lowest emissions per boarding. However, this time the rankings included Portland and Milwaukee, showing that the agencies performing well can change depending on whether we look at passenger trips or passenger miles.
+A possible limitation when comparing these agencies is that they serve different populations and areas. Some may operate in larger cities, while others serve smaller communities or suburban areas. These differences, along with how many passengers use each service and how far they travel, can affect the results. Because of this, the rankings don't necessarily mean that one city's entire public transportation system is more environmentally friendly than another's.
+
+```{r}
+#| include: false
+
+AWARD_BENCHMARKS <- AWARD_AGENCIES |>
+  summarize(
+    median_CO2_per_mile = median(CO2_per_passenger_mile),
+    median_CO2_per_trip = median(CO2_per_trip)
+  )
+
+GREENEST_AGENCIES |>
+  slice_head(n = 1) |>
+  select(
+    `Agency Name`,
+    state,
+    total_upt,
+    CO2_per_passenger_mile
+  )
+
+TRIP_EFFICIENT_AGENCIES |>
+  slice_head(n = 1) |>
+  select(
+    `Agency Name`,
+    state,
+    total_upt,
+    CO2_per_trip
+  )
+
+AWARD_BENCHMARKS
+```
+#### Checking Transit Mode Matching
+```{r}
+#| include: false
+NTD_ENERGY |>
+  count(Mode)
+
+NTD_ENERGY_READY |>
+  count(Mode, mode)
+
+NTD_SERVICE_SUMMARY |>
+  count(mode)
+```
+#### Checking the Combined Transit Data
+
+```{r}
+#| include: false
+NTD_ENERGY_READY |>
+  left_join(
+    NTD_SERVICE_SUMMARY,
+    by = c("NTD_ID", "mode")
+  ) |>
+  select(
+    `Agency Name`,
+    NTD_ID,
+    mode,
+    state,
+    total_upt
+  ) |>
+  slice_head(n = 10)
+```
+
+### What Do These Results Tell Us? {.unlisted}
+
+Looking at the results from both awards, we can see that the way we measure CO₂ emissions can make a difference when comparing transit agencies. Even though Seattle came in first for both awards, some of the other agencies changed depending on whether we looked at emissions per passenger trip or passenger mile. This shows why we wanted to consider both measurements instead of just looking at total emissions. However, these results don't necessarily mean that Seattle's entire public transportation system is the most environmentally friendly, since our findings are based on the transit services and information available in our datasets.
+
+### Limitations of Our Analysis {.unlisted}
+
+There were a few issues we encountered with the project in terms of getting the Excel data imported and sorted in RStudio. We also had to ensure that the data across the three data sets matched up correctly, and in some cases this wasn't possible as there were records that were missing information. We estimated CO2 emissions based on fuel consumption and state electricity data rather than measuring CO2 directly. Given that electricity generation varies from state to state, the emissions estimates may not necessarily be an accurate reflection of the environmental impact of each transit agency.
+
+### Final Takeaways {.unlisted}
+
+Going back to our original question, are the public transportation systems we rely on actually environmentally friendly? Based on the data we looked at, we found that some transit agencies had lower estimated CO₂ emissions per passenger trip and passenger mile than others. However, we can't necessarily say that all public transportation is environmentally friendly, since we didn't compare these results with emissions from individual car travel. What we did learn is that looking at total emissions alone isn't enough. We also need to consider how many passengers use these services and how far they travel when comparing the environmental performance of transit agencies.
+
+::: {.callout-note title="AI Usage Statement" collapse="true"}
+
+I used Claude to help troubleshoot errors, especially when working with the Excel data sets. I also used it to help check calculations, brainstorm ideas, and organize the overall project, like help with the website design, including adding images, choosing colors, and organizing how the information would be presented.
+
+:::
+
+------------------------------------------------------------------------
+
+This work ©2025 by Ashliz1 was initially prepared as a Mini-Project for
+STA 9750 at Baruch College. More details about this course can be found at
+[the course site](https://michael-weylandt.com/STA9750) and instructions for
+this assignment can be found at 
+[MP #02](https://michael-weylandt.com/STA9750/mini/mini02.html)

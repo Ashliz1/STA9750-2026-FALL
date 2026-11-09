@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ashley Gomez">
 
-<title>Mini-Project Placeholder – STA 9750 Submission Material</title>
+<title>Mini-Project 02: The Green Transit Report – STA 9750 Submission Material</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -45,7 +46,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6191c8c4c757b97205a8995aa6c30869.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f855831b9d69b0baad17d06baa4b10db.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -75,9 +76,10 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="silver-line.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -88,28 +90,77 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">STA 9750 Submission Material</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools tools-end">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./mp01.html"> 
+<span class="menu-text">Mini Project 1</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./mp02.html" aria-current="page"> 
+<span class="menu-text">Mini Project 2</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./mp03.html"> 
+<span class="menu-text">Mini Project 3</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./mp04.html"> 
+<span class="menu-text">Mini Project 4</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-acquisition-and-preparation" id="toc-data-acquisition-and-preparation" class="nav-link" data-scroll-target="#data-acquisition-and-preparation">Data Acquisition and Preparation</a></li>
+  <li><a href="#exploratory-analysis" id="toc-exploratory-analysis" class="nav-link" data-scroll-target="#exploratory-analysis">Exploratory Analysis</a></li>
+  <li><a href="#final-insights-and-deliverable" id="toc-final-insights-and-deliverable" class="nav-link" data-scroll-target="#final-insights-and-deliverable">Final Insights and Deliverable</a></li>
+  <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data Analysis</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Mini-Project Placeholder</h1>
+<h1 class="title">Mini-Project 02: The Green Transit Report</h1>
+<p class="subtitle lead">Evaluating Environmental Performance Across US Transit Systems</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-right">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ashley Gomez </p>
+          </div>
+  </div>
     
   
     
@@ -120,9 +171,1273 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This is a placeholder for STA9750 Mini-Project 2. Check back soon for more!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/images.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>New York City subway train with the skyline in the background</figcaption>
+</figure>
+</div>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="why-should-we-care-about-green-transit" class="level3 unnumbered unlisted">
+<h3 class="unnumbered unlisted anchored" data-anchor-id="why-should-we-care-about-green-transit">Why Should We Care About Green Transit?</h3>
+<p>In July 2025, New York City subways averaged approximately 3.86 million rides on weekdays, showing how heavily we rely on public transportation, whether it’s buses, trains, or other transit systems, to get to work, school, or any other destination. However, public transportation comes with its own challenges, such as how crowded and busy it can get, especially during rush hour, and how there always seem to be delays when we least expect them. You may have heard in the past that taking public transportation is better for the environment than everyone driving their own individual car. But have you ever wondered if the public transportation systems we rely on are actually environmentally friendly?</p>
+<p>To better understand how environmentally friendly public transportation systems are, we looked at three different datasets covering transit agencies across the United States. These datasets allow us to examine electricity production, fuel consumption, and passenger transportation. A key distinction is that producing less CO₂ doesn’t necessarily tell us the whole story. There are other factors to consider, such as how many passenger trips an agency provides and how far those passengers travel. By considering both total emissions and efficiency, we can better understand the environmental performance of transit agencies and determine which ones deserve recognition.</p>
+</section>
+</section>
+<section id="data-acquisition-and-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-acquisition-and-preparation">Data Acquisition and Preparation</h2>
+<section id="understanding-the-transit-data" class="level3 unnumbered unlisted">
+<h3 class="unnumbered unlisted anchored" data-anchor-id="understanding-the-transit-data">Understanding the Transit Data</h3>
+<p>The three datasets we explored were the EIA State Electricity Profiles, NTD Energy Consumption, and NTD Transit Service. Each dataset had a different purpose. The EIA State Electricity Profiles helped us understand how much CO₂ is produced from electricity generation in different states. The NTD Energy Consumption dataset showed us how much fuel and electricity transit agencies use, while the NTD Transit Service dataset provided information on how many passenger trips each agency had and how far passengers traveled.</p>
+<p>Before we could start our analysis, we first had to clean and prepare the datasets. This involved importing them into RStudio, reviewing the data, and ensuring the agency IDs and transit mode codes matched correctly. We also had to deal with some missing information, since not every agency had all the data we needed. Once everything was cleaned and prepared, we could move on to exploring the data and eventually combining the datasets to calculate emissions and compare transit agencies.</p>
+<!-- State Electricity Profiles: Downloading and preparing EIA electricity data -->
+<!-- Energy Consumption: NTD energy data -->
+<!-- Transit Service Provided: NTD service data -->
+<!-- Initial Data Inspection: Checking imported datasets -->
+<!-- Data Cleaning: Recoding transit modes -->
+</section>
+</section>
+<section id="exploratory-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-analysis">Exploratory Analysis</h2>
+<section id="what-can-the-transit-data-tell-us" class="level3 unnumbered unlisted">
+<h3 class="unnumbered unlisted anchored" data-anchor-id="what-can-the-transit-data-tell-us">What Can the Transit Data Tell Us?</h3>
+<p>Before moving on to our main analysis, we first wanted to get a better understanding of the three datasets. To do this, we explored eight questions that examined how much CO₂ is produced by electricity in different states, how much fuel transit agencies use, and how many passengers rely on these services. This helped us better understand the information we were working with before comparing the environmental performance of transit agencies.</p>
+</section>
+<section id="part-1-state-electricity-profiles" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-state-electricity-profiles">Part 1: State Electricity Profiles</h3>
+<section id="question-a2-which-five-states-have-the-dirtiest-electricity-mix" class="level4">
+<h4 class="anchored" data-anchor-id="question-a2-which-five-states-have-the-dirtiest-electricity-mix">Question A2: Which five states have the dirtiest electricity mix?</h4>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>          state CO2_MWh primary_source
+1 West Virginia    1912           Coal
+2      Kentucky    1744           Coal
+3       Wyoming    1724           Coal
+4      Missouri    1456           Coal
+5        Hawaii    1426      Petroleum</code></pre>
+</div>
+</div>
+</section>
+<section id="question-a3-average-co2-emissions-in-the-united-states" class="level4">
+<h4 class="anchored" data-anchor-id="question-a3-average-co2-emissions-in-the-united-states">Question A3: Average CO2 Emissions in the United States</h4>
+<p>Across the United States, the weighted average amount of CO2 produced for every megawatt-hour of electricity generated is approximately 784.9 pounds of CO2.</p>
+</section>
+<section id="question-a5-comparing-new-york-and-texas-electricity" class="level4">
+<h4 class="anchored" data-anchor-id="question-a5-comparing-new-york-and-texas-electricity">Question A5: Comparing New York and Texas Electricity</h4>
+<p>When comparing New York to Texas, we found that New York produces less CO2 per megawatt-hour of electricity than Texas. Texas produces approximately 1.53 times as much CO2 per megawatt-hour as New York.</p>
+</section>
+</section>
+<section id="part-2-transit-energy-consumption" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-transit-energy-consumption">Part 2: Transit Energy Consumption</h3>
+<section id="question-b1-five-transit-agencies-with-the-highest-fuel-consumption" class="level4">
+<h4 class="anchored" data-anchor-id="question-b1-five-transit-agencies-with-the-highest-fuel-consumption">Question B1: Five Transit Agencies with the Highest Fuel Consumption</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="ermbjmbltk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ermbjmbltk table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ermbjmbltk thead, #ermbjmbltk tbody, #ermbjmbltk tfoot, #ermbjmbltk tr, #ermbjmbltk td, #ermbjmbltk th {
+  border-style: none;
+}
+
+#ermbjmbltk p {
+  margin: 0;
+  padding: 0;
+}
+
+#ermbjmbltk .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ermbjmbltk .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ermbjmbltk .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ermbjmbltk .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ermbjmbltk .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ermbjmbltk .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ermbjmbltk .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ermbjmbltk .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ermbjmbltk .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ermbjmbltk .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ermbjmbltk .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ermbjmbltk .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ermbjmbltk .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ermbjmbltk .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ermbjmbltk .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ermbjmbltk .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ermbjmbltk .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ermbjmbltk .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ermbjmbltk .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ermbjmbltk .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ermbjmbltk .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ermbjmbltk .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ermbjmbltk .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ermbjmbltk .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ermbjmbltk .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ermbjmbltk .gt_left {
+  text-align: left;
+}
+
+#ermbjmbltk .gt_center {
+  text-align: center;
+}
+
+#ermbjmbltk .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ermbjmbltk .gt_font_normal {
+  font-weight: normal;
+}
+
+#ermbjmbltk .gt_font_bold {
+  font-weight: bold;
+}
+
+#ermbjmbltk .gt_font_italic {
+  font-style: italic;
+}
+
+#ermbjmbltk .gt_super {
+  font-size: 65%;
+}
+
+#ermbjmbltk .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ermbjmbltk .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ermbjmbltk .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ermbjmbltk .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ermbjmbltk .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ermbjmbltk .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ermbjmbltk .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#ermbjmbltk .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ermbjmbltk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border">Five Transit Agencies with the Highest Fuel Consumption</td>
+</tr>
+<tr class="gt_col_headings even">
+<th id="Agency-Name" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Transit Agency</th>
+<th id="total_gallons" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Total Gallons</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Agency-Name">New Jersey Transit Corporation</td>
+<td class="gt_row gt_right" headers="total_gallons">41,721,414</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Agency-Name">MTA New York City Transit</td>
+<td class="gt_row gt_right" headers="total_gallons">40,816,461</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Agency-Name">Los Angeles County Metropolitan Transportation Authority</td>
+<td class="gt_row gt_right" headers="total_gallons">31,416,293</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Agency-Name">Northeast Illinois Regional Commuter Railroad Corporation</td>
+<td class="gt_row gt_right" headers="total_gallons">26,829,691</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Agency-Name">Massachusetts Bay Transportation Authority</td>
+<td class="gt_row gt_right" headers="total_gallons">23,452,535</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="fuel-consumption-breakdown-by-type" class="level4">
+<h4 class="anchored" data-anchor-id="fuel-consumption-breakdown-by-type">Fuel Consumption Breakdown by Type</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="qymyrprkur" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qymyrprkur table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#qymyrprkur thead, #qymyrprkur tbody, #qymyrprkur tfoot, #qymyrprkur tr, #qymyrprkur td, #qymyrprkur th {
+  border-style: none;
+}
+
+#qymyrprkur p {
+  margin: 0;
+  padding: 0;
+}
+
+#qymyrprkur .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#qymyrprkur .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#qymyrprkur .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#qymyrprkur .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#qymyrprkur .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#qymyrprkur .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#qymyrprkur .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#qymyrprkur .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#qymyrprkur .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#qymyrprkur .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#qymyrprkur .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#qymyrprkur .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#qymyrprkur .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#qymyrprkur .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#qymyrprkur .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qymyrprkur .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#qymyrprkur .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#qymyrprkur .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#qymyrprkur .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qymyrprkur .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#qymyrprkur .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qymyrprkur .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#qymyrprkur .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qymyrprkur .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qymyrprkur .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qymyrprkur .gt_left {
+  text-align: left;
+}
+
+#qymyrprkur .gt_center {
+  text-align: center;
+}
+
+#qymyrprkur .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#qymyrprkur .gt_font_normal {
+  font-weight: normal;
+}
+
+#qymyrprkur .gt_font_bold {
+  font-weight: bold;
+}
+
+#qymyrprkur .gt_font_italic {
+  font-style: italic;
+}
+
+#qymyrprkur .gt_super {
+  font-size: 65%;
+}
+
+#qymyrprkur .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#qymyrprkur .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#qymyrprkur .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#qymyrprkur .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#qymyrprkur .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#qymyrprkur .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#qymyrprkur .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#qymyrprkur .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#qymyrprkur div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border">Fuel Consumption Breakdown by Agency</td>
+</tr>
+<tr class="gt_col_headings even">
+<th id="Agency-Name" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Transit Agency</th>
+<th id="Fuel_Type" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Fuel Type</th>
+<th id="Gallons" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Gallons Used</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Agency-Name">New Jersey Transit Corporation</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Compressed Natural Gas</td>
+<td class="gt_row gt_right" headers="Gallons">1,521,492</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Agency-Name">New Jersey Transit Corporation</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Diesel Fuel</td>
+<td class="gt_row gt_right" headers="Gallons">38,144,027</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Agency-Name">New Jersey Transit Corporation</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Gasoline</td>
+<td class="gt_row gt_right" headers="Gallons">2,055,895</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Agency-Name">MTA New York City Transit</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Compressed Natural Gas</td>
+<td class="gt_row gt_right" headers="Gallons">6,328,381</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Agency-Name">MTA New York City Transit</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Diesel Fuel</td>
+<td class="gt_row gt_right" headers="Gallons">30,217,934</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Agency-Name">MTA New York City Transit</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Gasoline</td>
+<td class="gt_row gt_right" headers="Gallons">4,270,146</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Agency-Name">Los Angeles County Metropolitan Transportation Authority</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Compressed Natural Gas</td>
+<td class="gt_row gt_right" headers="Gallons">30,410,141</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Agency-Name">Los Angeles County Metropolitan Transportation Authority</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Ethanol</td>
+<td class="gt_row gt_right" headers="Gallons">11,342</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Agency-Name">Los Angeles County Metropolitan Transportation Authority</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Gasoline</td>
+<td class="gt_row gt_right" headers="Gallons">994,810</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Agency-Name">Northeast Illinois Regional Commuter Railroad Corporation</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Diesel Fuel</td>
+<td class="gt_row gt_right" headers="Gallons">26,829,691</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Agency-Name">Massachusetts Bay Transportation Authority</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Compressed Natural Gas</td>
+<td class="gt_row gt_right" headers="Gallons">1,534,123</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Agency-Name">Massachusetts Bay Transportation Authority</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Diesel Fuel</td>
+<td class="gt_row gt_right" headers="Gallons">20,627,960</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Agency-Name">Massachusetts Bay Transportation Authority</td>
+<td class="gt_row gt_left" headers="Fuel_Type">Gasoline</td>
+<td class="gt_row gt_right" headers="Gallons">1,290,452</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="question-b2-fuel-consumption-across-us-public-transit" class="level4">
+<h4 class="anchored" data-anchor-id="question-b2-fuel-consumption-across-us-public-transit">Question B2: Fuel Consumption Across US Public Transit</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mp02_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="1056"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="part-3-transit-service" class="level3">
+<h3 class="anchored" data-anchor-id="part-3-transit-service">Part 3: Transit Service</h3>
+<section id="question-c1-five-transit-services-with-the-most-passenger-trips" class="level4">
+<h4 class="anchored" data-anchor-id="question-c1-five-transit-services-with-the-most-passenger-trips">Question C1: Five Transit Services with the Most Passenger Trips</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mp02_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="1056"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="question-c2-average-mta-new-york-city-transit-trip-length" class="level4">
+<h4 class="anchored" data-anchor-id="question-c2-average-mta-new-york-city-transit-trip-length">Question C2: Average MTA New York City Transit Trip Length</h4>
+<p>When looking at MTA New York City Transit, we found that the average passenger trip is approximately 3.18 miles.</p>
+</section>
+<section id="question-c3-nyc-transit-service-with-the-longest-average-trip" class="level4">
+<h4 class="anchored" data-anchor-id="question-c3-nyc-transit-service-with-the-longest-average-trip">Question C3: NYC Transit Service with the Longest Average Trip</h4>
+<p>Out of the NYC transit services we compared, Metro-North Railroad had the longest average passenger trip at approximately 24.3 miles.</p>
+</section>
+</section>
+</section>
+<section id="final-insights-and-deliverable" class="level2">
+<h2 class="anchored" data-anchor-id="final-insights-and-deliverable">Final Insights and Deliverable</h2>
+<section id="measuring-environmental-performance" class="level3 unnumbered unlisted">
+<h3 class="unnumbered unlisted anchored" data-anchor-id="measuring-environmental-performance">Measuring Environmental Performance</h3>
+<p>To better understand how environmentally friendly transit agencies are, we looked at both their total CO₂ emissions and the number of passengers they serve. We estimated emissions by looking at the fuel and electricity each agency used. However, total emissions alone don’t tell the whole story, since some agencies serve more passengers or offer longer trips than others. That’s why we also looked at emissions per passenger trip and passenger mile, which helped us make a better comparison between transit agencies.</p>
+</section>
+</section>
+<section id="data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="data-analysis">Data Analysis</h2>
+<section id="task-5-calculating-total-emissions" class="level3">
+<h3 class="anchored" data-anchor-id="task-5-calculating-total-emissions">Task 5: Calculating Total Emissions</h3>
+<p>In order to combine the three data sets, we first needed to match the transit agencies using their agency IDs and transportation modes. Once we had that information together, we used the state electricity data to estimate how much CO₂ was produced from electricity use, along with the fuel consumption data to estimate emissions from fuel. We then added both estimates together to calculate the total CO₂ emissions for each transit service. One issue we came across was that some records had missing information or didn’t match between data sets, meaning we couldn’t calculate emissions for every service.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>View the Detailed Emissions Calculation Process
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="preparing-the-data-for-integration" class="level4">
+<h4 class="anchored" data-anchor-id="preparing-the-data-for-integration">Preparing the Data for Integration</h4>
+</section>
+<section id="matching-transit-modes-and-agency-ids" class="level4">
+<h4 class="anchored" data-anchor-id="matching-transit-modes-and-agency-ids">Matching Transit Modes and Agency IDs</h4>
+</section>
+<section id="checking-agency-and-mode-matches" class="level4">
+<h4 class="anchored" data-anchor-id="checking-agency-and-mode-matches">Checking Agency and Mode Matches</h4>
+</section>
+<section id="checking-for-multiple-service-records" class="level4">
+<h4 class="anchored" data-anchor-id="checking-for-multiple-service-records">Checking for Multiple Service Records</h4>
+</section>
+<section id="combining-transit-service-records" class="level4">
+<h4 class="anchored" data-anchor-id="combining-transit-service-records">Combining Transit Service Records</h4>
+</section>
+<section id="joining-the-three-datasets" class="level4">
+<h4 class="anchored" data-anchor-id="joining-the-three-datasets">Joining the Three Datasets</h4>
+</section>
+<section id="calculating-electricity-related-co2-emissions" class="level4">
+<h4 class="anchored" data-anchor-id="calculating-electricity-related-co2-emissions">Calculating Electricity-Related CO2 Emissions</h4>
+</section>
+<section id="calculating-fuel-related-co2-emissions" class="level4">
+<h4 class="anchored" data-anchor-id="calculating-fuel-related-co2-emissions">Calculating Fuel-Related CO2 Emissions</h4>
+</section>
+<section id="completing-total-co2-emissions" class="level4">
+<h4 class="anchored" data-anchor-id="completing-total-co2-emissions">Completing Total CO2 Emissions</h4>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="task-6-emissions-per-passenger" class="level3">
+<h3 class="anchored" data-anchor-id="task-6-emissions-per-passenger">Task 6: Emissions per Passenger</h3>
+<p>Looking at total CO2 emissions alone doesn’t tell the whole story, particularly when you’ve got some agencies that serve a lot more passengers or cover a lot more distance than others. Take NYC as an example. A person traveling from Queens to the Bronx is going to have a longer commute than someone traveling within Queens. That’s why we also wanted to look at emissions per passenger trip and emissions per passenger mile. They sound the same but they’re very different. A passenger trip is simply the number of times someone boards a vehicle. A passenger mile is the number of miles travelled by a passenger. One possible limitation with the trip ride is that a person transferring from one train to another could be counted as multiple boardings even though they’re only making one journey. Looking at both of those metrics gives us a better sense of how passenger activity and passenger miles impact our comparison.</p>
+</section>
+<section id="task-7-identifying-environmentally-responsible-transit-agencies" class="level3">
+<h3 class="anchored" data-anchor-id="task-7-identifying-environmentally-responsible-transit-agencies">Task 7: Identifying Environmentally Responsible Transit Agencies</h3>
+<p>For our analysis, we decided to have two awards: Greenest Transit Agency and Most Efficient Passenger Boarding. At first, these awards might sound like they’re measuring the same thing, but there’s actually a difference. The Greenest Transit Agency award looks at CO₂ emissions per passenger mile, while the Most Efficient Passenger Boarding award looks at emissions per passenger trip. We wanted to include both because the number of times passengers board a transit service doesn’t necessarily tell us how far they’re traveling. To qualify for either award, agencies needed at least one million passenger trips and one million passenger miles, along with available emissions estimates. We then selected the agency with the lowest emissions for each measurement.</p>
+<!-- Combining Transportation Modes by Agency -->
+<!-- Selecting the Two Award Winners -->
+</section>
+<section id="visualizing-the-environmental-awards" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-the-environmental-awards">Visualizing the Environmental Awards</h3>
+</section>
+<section id="which-transit-agencies-are-leading-the-way" class="level3">
+<h3 class="anchored" data-anchor-id="which-transit-agencies-are-leading-the-way">Which Transit Agencies Are Leading the Way?</h3>
+<p>After looking at the total CO₂ emissions and passenger activity, we wanted to see which transit agencies stood out. For this, we decided to use two awards: Greenest Transit Agency and Most Efficient Passenger Boarding. Although these awards might sound similar, they look at two different things. One considers how far passengers travel, while the other looks at how many times passengers board. We chose both because the number of passenger trips doesn’t necessarily tell us the distance people are traveling, and we wanted to consider both when comparing transit agencies. To qualify, agencies needed at least one million passenger trips and one million passenger miles, along with available emissions estimates.</p>
+<section id="award-1-greenest-transit-agency" class="level4">
+<h4 class="anchored" data-anchor-id="award-1-greenest-transit-agency">Award 1: Greenest Transit Agency</h4>
+<p>For the Greenest Transit Agency award, the agency that produced the lowest estimated CO₂ emissions per passenger mile was the City of Seattle. Seattle came in first with approximately 0.064 pounds of CO₂ per passenger mile, compared to the median of 1.07 pounds among eligible agencies. This means that, based on the distance passengers traveled, Seattle’s reported service had one of the lowest estimated emissions in our analysis.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mp02_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="1056"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="award-2-passenger-trip-efficiency-award" class="level4">
+<h4 class="anchored" data-anchor-id="award-2-passenger-trip-efficiency-award">Award 2: Passenger Trip Efficiency Award</h4>
+<p>Our second award, Most Efficient Passenger Boarding, focused on the amount of CO₂ produced per passenger boarding rather than the distance traveled. The city of Seattle also came in first for this award, with approximately 0.0575 pounds of CO₂ per boarding, compared to the median of 5.92 pounds among eligible agencies. Even though this award measures something different from the first, Seattle still had the lowest estimated emissions among the agencies that qualified.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mp02_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="1056"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="comparing-award-winners-with-other-agencies" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-award-winners-with-other-agencies">Comparing Award Winners with Other Agencies</h3>
+<p>When comparing Seattle’s performance with the other transit agencies shown in the bar charts, we can see that Seattle had the lowest estimated CO₂ emissions in both award categories. For the Greenest Transit Agency award, we looked at the five agencies with the lowest emissions per passenger mile, which included agencies in Oregon, California, Anaheim, and Snohomish County. Although all five performed well compared to other eligible agencies, Seattle still ranked the lowest. For the second award, Most Efficient Passenger Boarding, Seattle once again came in first among the five agencies with the lowest emissions per boarding. However, this time the rankings included Portland and Milwaukee, showing that the agencies performing well can change depending on whether we look at passenger trips or passenger miles. A possible limitation when comparing these agencies is that they serve different populations and areas. Some may operate in larger cities, while others serve smaller communities or suburban areas. These differences, along with how many passengers use each service and how far they travel, can affect the results. Because of this, the rankings don’t necessarily mean that one city’s entire public transportation system is more environmentally friendly than another’s.</p>
+<section id="checking-transit-mode-matching" class="level4">
+<h4 class="anchored" data-anchor-id="checking-transit-mode-matching">Checking Transit Mode Matching</h4>
+</section>
+<section id="checking-the-combined-transit-data" class="level4">
+<h4 class="anchored" data-anchor-id="checking-the-combined-transit-data">Checking the Combined Transit Data</h4>
+</section>
+</section>
+<section id="what-do-these-results-tell-us" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="what-do-these-results-tell-us">What Do These Results Tell Us?</h3>
+<p>Looking at the results from both awards, we can see that the way we measure CO₂ emissions can make a difference when comparing transit agencies. Even though Seattle came in first for both awards, some of the other agencies changed depending on whether we looked at emissions per passenger trip or passenger mile. This shows why we wanted to consider both measurements instead of just looking at total emissions. However, these results don’t necessarily mean that Seattle’s entire public transportation system is the most environmentally friendly, since our findings are based on the transit services and information available in our datasets.</p>
+</section>
+<section id="limitations-of-our-analysis" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="limitations-of-our-analysis">Limitations of Our Analysis</h3>
+<p>There were a few issues we encountered with the project in terms of getting the Excel data imported and sorted in RStudio. We also had to ensure that the data across the three data sets matched up correctly, and in some cases this wasn’t possible as there were records that were missing information. We estimated CO2 emissions based on fuel consumption and state electricity data rather than measuring CO2 directly. Given that electricity generation varies from state to state, the emissions estimates may not necessarily be an accurate reflection of the environmental impact of each transit agency.</p>
+</section>
+<section id="final-takeaways" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="final-takeaways">Final Takeaways</h3>
+<p>Going back to our original question, are the public transportation systems we rely on actually environmentally friendly? Based on the data we looked at, we found that some transit agencies had lower estimated CO₂ emissions per passenger trip and passenger mile than others. However, we can’t necessarily say that all public transportation is environmentally friendly, since we didn’t compare these results with emissions from individual car travel. What we did learn is that looking at total emissions alone isn’t enough. We also need to consider how many passengers use these services and how far they travel when comparing the environmental performance of transit agencies.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="AI Usage Statement">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>AI Usage Statement
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>I used Claude to help troubleshoot errors, especially when working with the Excel data sets. I also used it to help check calculations, brainstorm ideas, and organize the overall project, like help with the website design, including adding images, choosing colors, and organizing how the information would be presented.</p>
+</div>
+</div>
+</div>
+<hr>
+<p>This work ©2025 by Ashliz1 was initially prepared as a Mini-Project for STA 9750 at Baruch College. More details about this course can be found at <a href="https://michael-weylandt.com/STA9750">the course site</a> and instructions for this assignment can be found at <a href="https://michael-weylandt.com/STA9750/mini/mini02.html">MP #02</a></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
